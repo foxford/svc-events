@@ -1,4 +1,4 @@
-use crate::{Event, EventError, Parse};
+use crate::{Event, EventError};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Serialize, Eq, PartialEq)]
@@ -15,19 +15,20 @@ pub struct VideoGroupPayload {
     pub entity_event_id: i64,
 }
 
-impl Parse for VideoGroupEvent {
-    type Item = (&'static str, VideoGroupPayload);
-
-    fn parse(value: &[u8]) -> Result<Self::Item, EventError> {
+impl VideoGroupEvent {
+    pub fn from_slice(value: &[u8]) -> Result<Self, EventError> {
         let event = serde_json::from_slice::<Event>(value).map_err(EventError::DeserializeError)?;
+        let Event::VideoGroup(event) = event;
 
-        let (label, payload) = match event {
-            Event::VideoGroup(VideoGroupEvent::Created(payload)) => ("created", payload),
-            Event::VideoGroup(VideoGroupEvent::Updated(payload)) => ("updated", payload),
-            Event::VideoGroup(VideoGroupEvent::Deleted(payload)) => ("deleted", payload),
-        };
+        Ok(event)
+    }
 
-        Ok((label, payload))
+    pub fn payload(&self) -> (&str, &VideoGroupPayload) {
+        match self {
+            VideoGroupEvent::Created(payload) => ("created", payload),
+            VideoGroupEvent::Updated(payload) => ("updated", payload),
+            VideoGroupEvent::Deleted(payload) => ("deleted", payload),
+        }
     }
 }
 

@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 pub use crate::video_group::VideoGroupEvent;
+use crate::video_group::VideoGroupPayload;
 
 pub mod video_group;
 
@@ -16,8 +17,14 @@ pub enum EventError {
     DeserializeError(#[from] serde_json::Error),
 }
 
-pub trait Parse {
-    type Item;
+impl Event {
+    pub fn parse(value: &[u8]) -> Result<Self, EventError> {
+        serde_json::from_slice::<Event>(value).map_err(EventError::DeserializeError)
+    }
 
-    fn parse(value: &[u8]) -> Result<Self::Item, EventError>;
+    pub fn payload(&self) -> (&str, &VideoGroupPayload) {
+        match self {
+            Event::VideoGroup(e) => e.payload(),
+        }
+    }
 }
