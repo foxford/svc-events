@@ -15,3 +15,9 @@ pub enum EventError {
     #[error(transparent)]
     DeserializeError(#[from] serde_json::Error),
 }
+
+pub trait Parse {
+    type Item;
+
+    fn parse(value: &[u8]) -> Result<Self::Item, EventError>;
+}
