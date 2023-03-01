@@ -1,4 +1,3 @@
-use crate::{Event, EventError};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Serialize, Eq, PartialEq)]
@@ -12,24 +11,13 @@ pub enum VideoGroupEvent {
 #[derive(Debug, Deserialize, Serialize, Eq, PartialEq)]
 pub struct VideoGroupPayload {
     pub created_at: i64,
-    pub entity_event_id: i64,
 }
 
-impl VideoGroupEvent {
-    pub fn from_slice(value: &[u8]) -> Result<Self, EventError> {
-        let event = serde_json::from_slice::<Event>(value).map_err(EventError::DeserializeError)?;
-        let Event::VideoGroup(event) = event;
-
-        Ok(event)
-    }
-
-    pub fn payload(&self) -> (&str, &VideoGroupPayload) {
-        match self {
-            VideoGroupEvent::Created(payload) => ("created", payload),
-            VideoGroupEvent::Updated(payload) => ("updated", payload),
-            VideoGroupEvent::Deleted(payload) => ("deleted", payload),
-        }
-    }
+#[derive(Copy, Clone, Debug, Deserialize, Serialize)]
+pub enum VideoGroupOperation {
+    Create(i64),
+    Update(i64),
+    Delete(i64),
 }
 
 #[cfg(test)]
@@ -45,7 +33,6 @@ mod tests {
         fn serialize_test() {
             let payload = VideoGroupPayload {
                 created_at: 1673955105514,
-                entity_event_id: 1,
             };
             let video_group = VideoGroupEvent::Created(payload);
             let event = Event::VideoGroup(video_group);
@@ -54,7 +41,7 @@ mod tests {
 
             assert_eq!(
                 json,
-                "{\"entity_type\":\"video_group\",\"label\":\"created\",\"created_at\":1673955105514,\"entity_event_id\":1}"
+                "{\"entity_type\":\"video_group\",\"label\":\"created\",\"created_at\":1673955105514}"
             )
         }
 
@@ -65,7 +52,6 @@ mod tests {
                     "entity_type": "video_group",
                     "label": "updated",
                     "created_at": 1673955105514 as i64,
-                    "entity_event_id": 1 as i64
                 }
             );
             let json = serde_json::to_string(&json).expect("serialization to string");
@@ -74,7 +60,6 @@ mod tests {
 
             let payload = VideoGroupPayload {
                 created_at: 1673955105514,
-                entity_event_id: 1,
             };
             let video_group = VideoGroupEvent::Updated(payload);
             let event2 = Event::VideoGroup(video_group);

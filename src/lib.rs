@@ -1,7 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-pub use crate::video_group::VideoGroupEvent;
-use crate::video_group::VideoGroupPayload;
+pub use crate::video_group::{VideoGroupEvent, VideoGroupOperation, VideoGroupPayload};
 
 pub mod video_group;
 
@@ -11,20 +10,59 @@ pub enum Event {
     VideoGroup(VideoGroupEvent),
 }
 
-#[derive(thiserror::Error, Debug)]
-pub enum EventError {
-    #[error(transparent)]
-    DeserializeError(#[from] serde_json::Error),
+#[derive(Clone, Copy, Debug, Deserialize, Serialize)]
+pub enum Operation {
+    VideoGroup(VideoGroupOperation),
 }
 
-impl Event {
-    pub fn parse(value: &[u8]) -> Result<Self, EventError> {
-        serde_json::from_slice::<Event>(value).map_err(EventError::DeserializeError)
-    }
-
-    pub fn payload(&self) -> (&str, &VideoGroupPayload) {
+impl Operation {
+    pub fn as_label(&self) -> &str {
         match self {
-            Event::VideoGroup(e) => e.payload(),
+            Operation::VideoGroup(op) => match op {
+                VideoGroupOperation::Create(_) => "created",
+                VideoGroupOperation::Update(_) => "updated",
+                VideoGroupOperation::Delete(_) => "deleted",
+            },
+        }
+    }
+}
+
+impl From<Event> for Operation {
+    fn from(event: Event) -> Self {
+        match event {
+            Event::VideoGroup(e) => match e {
+                VideoGroupEvent::Created(payload) => {
+                    Operation::VideoGroup(VideoGroupOperation::Create(payload.created_at))
+                }
+                VideoGroupEvent::Updated(payload) => {
+                    Operation::VideoGroup(VideoGroupOperation::Update(payload.created_at))
+                }
+                VideoGroupEvent::Deleted(payload) => {
+                    Operation::VideoGroup(VideoGroupOperation::Delete(payload.created_at))
+                }
+            },
+        }
+    }
+}
+
+impl From<Operation> for Event {
+    fn from(operation: Operation) -> Self {
+        match operation {
+            Operation::VideoGroup(op) => {
+                let event = match op {
+                    VideoGroupOperation::Create(created_at) => {
+                        VideoGroupEvent::Created(VideoGroupPayload { created_at })
+                    }
+                    VideoGroupOperation::Update(created_at) => {
+                        VideoGroupEvent::Updated(VideoGroupPayload { created_at })
+                    }
+                    VideoGroupOperation::Delete(created_at) => {
+                        VideoGroupEvent::Deleted(VideoGroupPayload { created_at })
+                    }
+                };
+
+                Event::VideoGroup(event)
+            }
         }
     }
 }
