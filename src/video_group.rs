@@ -1,23 +1,38 @@
+use crate::Event;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Deserialize, Serialize, Eq, PartialEq)]
+#[derive(Debug, Clone, Copy, Deserialize, Serialize, Eq, PartialEq)]
 #[serde(tag = "label", rename_all = "snake_case")]
 pub enum VideoGroupEvent {
-    Created(VideoGroupPayload),
-    Updated(VideoGroupPayload),
-    Deleted(VideoGroupPayload),
+    Created { created_at: i64 },
+    Updated { created_at: i64 },
+    Deleted { created_at: i64 },
 }
 
-#[derive(Debug, Deserialize, Serialize, Eq, PartialEq)]
-pub struct VideoGroupPayload {
-    pub created_at: i64,
+impl From<VideoGroupEvent> for Event {
+    fn from(event: VideoGroupEvent) -> Self {
+        Event::VideoGroup(event)
+    }
 }
 
-#[derive(Copy, Clone, Debug, Deserialize, Serialize)]
-pub enum VideoGroupOperation {
-    Create(i64),
-    Update(i64),
-    Delete(i64),
+impl VideoGroupEvent {
+    pub fn created_at(&self) -> i64 {
+        match *self {
+            VideoGroupEvent::Created { created_at } => created_at,
+            VideoGroupEvent::Updated { created_at } => created_at,
+            VideoGroupEvent::Deleted { created_at } => created_at,
+        }
+    }
+
+    pub fn as_label(&self) -> String {
+        let label = match self {
+            VideoGroupEvent::Created { .. } => "created",
+            VideoGroupEvent::Updated { .. } => "updated",
+            VideoGroupEvent::Deleted { .. } => "deleted",
+        };
+
+        String::from(label)
+    }
 }
 
 #[cfg(test)]
@@ -31,10 +46,9 @@ mod tests {
 
         #[test]
         fn serialize_test() {
-            let payload = VideoGroupPayload {
+            let video_group = VideoGroupEvent::Created {
                 created_at: 1673955105514,
             };
-            let video_group = VideoGroupEvent::Created(payload);
             let event = Event::VideoGroup(video_group);
 
             let json = serde_json::to_string(&event).expect("serialization to string");
@@ -55,13 +69,11 @@ mod tests {
                 }
             );
             let json = serde_json::to_string(&json).expect("serialization to string");
-
             let event1 = serde_json::from_str::<Event>(&json).unwrap();
 
-            let payload = VideoGroupPayload {
+            let video_group = VideoGroupEvent::Updated {
                 created_at: 1673955105514,
             };
-            let video_group = VideoGroupEvent::Updated(payload);
             let event2 = Event::VideoGroup(video_group);
 
             assert_eq!(event1, event2);
