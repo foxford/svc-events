@@ -25,14 +25,12 @@ impl VideoGroupEventV1 {
         }
     }
 
-    pub fn as_label(&self) -> String {
-        let label = match self {
+    pub fn as_label(&self) -> &str {
+        match self {
             VideoGroupEventV1::Created { .. } => "created",
             VideoGroupEventV1::Updated { .. } => "updated",
             VideoGroupEventV1::Deleted { .. } => "deleted",
-        };
-
-        String::from(label)
+        }
     }
 }
 
