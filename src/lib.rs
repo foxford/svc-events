@@ -1,9 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-pub use crate::v1::{
-    ban::BanEventAccessCompleteV1, ban::BanEventV1, ban::BanVideoCompleteV1,
-    video_group::VideoGroupEventV1, EventV1,
-};
+pub use crate::v1::{ban, video_group::VideoGroupEventV1, EventV1};
 
 mod v1;
 
@@ -11,13 +8,6 @@ mod v1;
 #[serde(tag = "version", rename_all = "snake_case")]
 pub enum Event {
     V1(EventV1),
-}
-
-// TODO: this impl is not visible if it's inside v1::ban mod
-impl From<BanEventV1> for Event {
-    fn from(value: BanEventV1) -> Self {
-        Event::V1(EventV1::Ban(value))
-    }
 }
 
 #[cfg(test)]
