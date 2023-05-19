@@ -13,6 +13,7 @@ pub enum Event {
     V1(EventV1),
 }
 
+// TODO: this impl is not visible if it's inside v1::ban mod
 impl From<BanEventV1> for Event {
     fn from(value: BanEventV1) -> Self {
         Event::V1(EventV1::Ban(value))
