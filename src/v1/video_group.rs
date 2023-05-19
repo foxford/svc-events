@@ -1,4 +1,4 @@
-use crate::v1::EventV1;
+use crate::{v1::EventV1, Event};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Deserialize, Serialize, Eq, PartialEq)]
@@ -13,6 +13,12 @@ pub enum VideoGroupEventV1 {
 impl From<VideoGroupEventV1> for EventV1 {
     fn from(event: VideoGroupEventV1) -> Self {
         EventV1::VideoGroup(event)
+    }
+}
+
+impl From<VideoGroupEventV1> for Event {
+    fn from(value: VideoGroupEventV1) -> Self {
+        Event::V1(EventV1::VideoGroup(value))
     }
 }
 

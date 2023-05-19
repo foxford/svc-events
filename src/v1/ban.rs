@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 use svc_authn::AccountId;
 use uuid::Uuid;
 
-use crate::v1::EventV1;
+use crate::{v1::EventV1, Event};
 
 #[derive(Debug, Clone, Deserialize, Serialize, Eq, PartialEq)]
 #[serde(tag = "label", rename_all = "snake_case")]
@@ -31,6 +31,12 @@ pub enum BanEventV1 {
 impl From<BanEventV1> for EventV1 {
     fn from(event: BanEventV1) -> Self {
         EventV1::Ban(event)
+    }
+}
+
+impl From<BanEventV1> for Event {
+    fn from(value: BanEventV1) -> Self {
+        Event::V1(EventV1::Ban(value))
     }
 }
 
