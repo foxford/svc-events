@@ -12,16 +12,19 @@ pub enum BanEventV1 {
         ban: bool,
         classroom_id: Uuid,
         user_account: AccountId,
+        op_id: Uuid,
     },
     Ban {
         ban: bool,
         classroom_id: Uuid,
         user_account: AccountId,
+        op_id: Uuid,
     },
     Complete {
         ban: bool,
         classroom_id: Uuid,
         user_account: AccountId,
+        op_id: Uuid,
     },
 }
 
@@ -38,6 +41,7 @@ pub struct BanVideoCompleteV1 {
     ban: bool,
     classroom_id: Uuid,
     user_account: AccountId,
+    op_id: Uuid,
     // TODO: move EventId into this crate
     // parent: EventId
 }
@@ -49,6 +53,7 @@ pub struct BanEventAccessCompleteV1 {
     ban: bool,
     classroom_id: Uuid,
     user_account: AccountId,
+    op_id: Uuid,
     // TODO: move EventId into this crate
     // parent: EventId,
 }
