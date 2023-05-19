@@ -1,10 +1,10 @@
 [package]
-name = "svc-conference-events"
-version = "0.2.0"
+name = "svc-events"
+version = "0.3.0"
 edition = "2021"
 license = "MIT"
 repository = "https://github.com/foxford/svc-conference-events"
-description = "Conference events"
+description = "Foxford events"
 
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
