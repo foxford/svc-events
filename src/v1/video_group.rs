@@ -1,7 +1,7 @@
 use crate::v1::EventV1;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Copy, Deserialize, Serialize, Eq, PartialEq)]
+#[derive(Debug, Clone, Deserialize, Serialize, Eq, PartialEq)]
 #[serde(tag = "label", rename_all = "snake_case")]
 #[serde(rename(deserialize = "VideoGroupEvent"))]
 pub enum VideoGroupEventV1 {
