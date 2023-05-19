@@ -8,10 +8,10 @@ use crate::{Event, EventV1};
 #[serde(tag = "label", rename_all = "snake_case")]
 #[serde(rename(deserialize = "BanIntentEvent"))]
 pub struct BanIntentEventV1 {
-    ban: bool,
-    classroom_id: Uuid,
-    user_account: AccountId,
-    op_id: Uuid,
+    pub ban: bool,
+    pub classroom_id: Uuid,
+    pub user_account: AccountId,
+    pub op_id: Uuid,
 }
 
 impl From<BanIntentEventV1> for Event {
@@ -24,10 +24,10 @@ impl From<BanIntentEventV1> for Event {
 #[serde(tag = "label", rename_all = "snake_case")]
 #[serde(rename(deserialize = "BanEvent"))]
 pub struct BanEventV1 {
-    ban: bool,
-    classroom_id: Uuid,
-    user_account: AccountId,
-    op_id: Uuid,
+    pub ban: bool,
+    pub classroom_id: Uuid,
+    pub user_account: AccountId,
+    pub op_id: Uuid,
 }
 
 impl From<BanEventV1> for Event {
@@ -40,10 +40,10 @@ impl From<BanEventV1> for Event {
 #[serde(tag = "label", rename_all = "snake_case")]
 #[serde(rename(deserialize = "BanCompleteEvent"))]
 pub struct BanCompleteEventV1 {
-    ban: bool,
-    classroom_id: Uuid,
-    user_account: AccountId,
-    op_id: Uuid,
+    pub ban: bool,
+    pub classroom_id: Uuid,
+    pub user_account: AccountId,
+    pub op_id: Uuid,
 }
 
 impl From<BanCompleteEventV1> for Event {
@@ -56,10 +56,10 @@ impl From<BanCompleteEventV1> for Event {
 #[serde(tag = "label", rename_all = "snake_case")]
 #[serde(rename(deserialize = "BanVideoComplete"))]
 pub struct BanVideoCompleteV1 {
-    ban: bool,
-    classroom_id: Uuid,
-    user_account: AccountId,
-    op_id: Uuid,
+    pub ban: bool,
+    pub classroom_id: Uuid,
+    pub user_account: AccountId,
+    pub op_id: Uuid,
     // TODO: move EventId into this crate
     // parent: EventId
 }
@@ -74,10 +74,10 @@ impl From<BanVideoCompleteV1> for Event {
 #[serde(tag = "label", rename_all = "snake_case")]
 #[serde(rename(deserialize = "BanEventAccessComplete"))]
 pub struct BanEventAccessCompleteV1 {
-    ban: bool,
-    classroom_id: Uuid,
-    user_account: AccountId,
-    op_id: Uuid,
+    pub ban: bool,
+    pub classroom_id: Uuid,
+    pub user_account: AccountId,
+    pub op_id: Uuid,
     // TODO: move EventId into this crate
     // parent: EventId,
 }
