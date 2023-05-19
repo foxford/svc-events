@@ -13,6 +13,12 @@ pub enum Event {
     V1(EventV1),
 }
 
+impl From<BanEventV1> for Event {
+    fn from(value: BanEventV1) -> Self {
+        Event::V1(EventV1::Ban(value))
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
