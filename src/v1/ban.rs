@@ -11,7 +11,8 @@ pub struct BanIntentEventV1 {
     pub ban: bool,
     pub classroom_id: Uuid,
     pub user_account: AccountId,
-    pub op_id: Uuid,
+    pub last_op_id: Uuid,
+    pub new_op_id: Uuid,
 }
 
 impl From<BanIntentEventV1> for Event {
