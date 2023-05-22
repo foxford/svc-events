@@ -37,6 +37,17 @@ impl From<BanEventV1> for Event {
     }
 }
 
+impl From<BanIntentEventV1> for BanEventV1 {
+    fn from(b: BanIntentEventV1) -> Self {
+        Self {
+            ban: b.ban,
+            classroom_id: b.classroom_id,
+            user_account: b.user_account,
+            op_id: b.new_op_id,
+        }
+    }
+}
+
 #[derive(Debug, Clone, Deserialize, Serialize, Eq, PartialEq)]
 #[serde(tag = "label", rename_all = "snake_case")]
 #[serde(rename(deserialize = "BanCompleteEvent"))]
