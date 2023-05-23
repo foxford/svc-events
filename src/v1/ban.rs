@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 use svc_authn::AccountId;
 use uuid::Uuid;
 
-use crate::{Event, EventV1};
+use crate::{Event, EventId, EventV1};
 
 #[derive(Debug, Clone, Deserialize, Serialize, Eq, PartialEq)]
 #[serde(tag = "label", rename_all = "snake_case")]
@@ -72,8 +72,7 @@ pub struct BanVideoCompleteV1 {
     pub classroom_id: Uuid,
     pub user_account: AccountId,
     pub op_id: Uuid,
-    // TODO: move EventId into this crate
-    // parent: EventId
+    pub parent: EventId,
 }
 
 impl From<BanVideoCompleteV1> for Event {
@@ -90,8 +89,7 @@ pub struct BanEventAccessCompleteV1 {
     pub classroom_id: Uuid,
     pub user_account: AccountId,
     pub op_id: Uuid,
-    // TODO: move EventId into this crate
-    // parent: EventId,
+    pub parent: EventId,
 }
 
 impl From<BanEventAccessCompleteV1> for Event {

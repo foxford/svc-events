@@ -1,7 +1,9 @@
 use serde::{Deserialize, Serialize};
 
+pub use crate::event_id::EventId;
 pub use crate::v1::{ban, video_group::VideoGroupEventV1, EventV1};
 
+mod event_id;
 mod v1;
 
 #[derive(Clone, Debug, Deserialize, Serialize, Eq, PartialEq)]
