@@ -1,1 +1,1 @@
-# svc-conference-events
+# svc-events

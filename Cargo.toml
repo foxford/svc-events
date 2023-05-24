@@ -3,7 +3,7 @@ name = "svc-events"
 version = "0.3.0"
 edition = "2021"
 license = "MIT"
-repository = "https://github.com/foxford/svc-conference-events"
+repository = "https://github.com/foxford/svc-events"
 description = "Foxford events"
 
 [dependencies]
