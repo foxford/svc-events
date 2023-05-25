@@ -13,7 +13,6 @@ pub struct BanIntentV1 {
     pub sender: AccountId,
     pub user_account: AccountId,
     pub last_op_id: i64,
-    pub new_op_id: i64,
 }
 
 impl From<BanIntentV1> for Event {
@@ -38,17 +37,6 @@ impl From<BanAcceptedV1> for Event {
     }
 }
 
-impl From<BanIntentV1> for BanAcceptedV1 {
-    fn from(b: BanIntentV1) -> Self {
-        Self {
-            ban: b.ban,
-            classroom_id: b.classroom_id,
-            user_account: b.user_account,
-            op_id: b.new_op_id,
-        }
-    }
-}
-
 #[derive(Debug, Clone, Deserialize, Serialize, Eq, PartialEq)]
 #[serde(tag = "label", rename_all = "snake_case")]
 #[serde(rename(deserialize = "BanRejected"))]
@@ -62,17 +50,6 @@ pub struct BanRejectedV1 {
 impl From<BanRejectedV1> for Event {
     fn from(value: BanRejectedV1) -> Self {
         Event::V1(EventV1::BanRejected(value))
-    }
-}
-
-impl From<BanIntentV1> for BanRejectedV1 {
-    fn from(b: BanIntentV1) -> Self {
-        Self {
-            ban: b.ban,
-            classroom_id: b.classroom_id,
-            user_account: b.user_account,
-            op_id: b.new_op_id,
-        }
     }
 }
 
