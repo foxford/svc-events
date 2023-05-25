@@ -12,8 +12,8 @@ pub struct BanIntentV1 {
     pub classroom_id: Uuid,
     pub sender: AccountId,
     pub user_account: AccountId,
-    pub last_op_id: Uuid,
-    pub new_op_id: Uuid,
+    pub last_op_id: i64,
+    pub new_op_id: i64,
 }
 
 impl From<BanIntentV1> for Event {
@@ -29,7 +29,7 @@ pub struct BanAcceptedV1 {
     pub ban: bool,
     pub classroom_id: Uuid,
     pub user_account: AccountId,
-    pub op_id: Uuid,
+    pub op_id: i64,
 }
 
 impl From<BanAcceptedV1> for Event {
@@ -56,7 +56,7 @@ pub struct BanRejectedV1 {
     pub ban: bool,
     pub classroom_id: Uuid,
     pub user_account: AccountId,
-    pub op_id: Uuid,
+    pub op_id: i64,
 }
 
 impl From<BanRejectedV1> for Event {
@@ -83,7 +83,7 @@ pub struct BanVideoStreamingCompletedV1 {
     pub ban: bool,
     pub classroom_id: Uuid,
     pub user_account: AccountId,
-    pub op_id: Uuid,
+    pub op_id: i64,
     pub parent: EventId,
 }
 
@@ -100,7 +100,7 @@ pub struct BanCollaborationCompletedV1 {
     pub ban: bool,
     pub classroom_id: Uuid,
     pub user_account: AccountId,
-    pub op_id: Uuid,
+    pub op_id: i64,
     pub parent: EventId,
 }
 
@@ -117,7 +117,7 @@ pub struct BanCompletedV1 {
     pub ban: bool,
     pub classroom_id: Uuid,
     pub user_account: AccountId,
-    pub op_id: Uuid,
+    pub op_id: i64,
 }
 
 impl From<BanCompletedV1> for Event {
