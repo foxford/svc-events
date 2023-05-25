@@ -9,11 +9,12 @@ pub mod video_group;
 #[serde(rename(deserialize = "Event"))]
 pub enum EventV1 {
     VideoGroup(video_group::VideoGroupEventV1),
-    BanIntent(ban::BanIntentEventV1),
-    BanVideoComplete(ban::BanVideoCompleteV1),
-    BanEventAccessComplete(ban::BanEventAccessCompleteV1),
-    Ban(ban::BanEventV1),
-    BanComplete(ban::BanCompleteEventV1),
+    BanIntent(ban::BanIntentV1),
+    BanAccepted(ban::BanAcceptedV1),
+    BanRejected(ban::BanRejectedV1),
+    BanVideoStreamingCompleted(ban::BanVideoStreamingCompletedV1),
+    BanCollaborationCompleted(ban::BanCollaborationCompletedV1),
+    BanCompleted(ban::BanCompletedV1),
 }
 
 impl From<EventV1> for Event {
