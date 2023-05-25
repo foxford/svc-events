@@ -78,22 +78,6 @@ impl From<BanIntentV1> for BanRejectedV1 {
 
 #[derive(Debug, Clone, Deserialize, Serialize, Eq, PartialEq)]
 #[serde(tag = "label", rename_all = "snake_case")]
-#[serde(rename(deserialize = "BanCompleted"))]
-pub struct BanCompletedV1 {
-    pub ban: bool,
-    pub classroom_id: Uuid,
-    pub user_account: AccountId,
-    pub op_id: Uuid,
-}
-
-impl From<BanCompletedV1> for Event {
-    fn from(value: BanCompletedV1) -> Self {
-        Event::V1(EventV1::BanCompleted(value))
-    }
-}
-
-#[derive(Debug, Clone, Deserialize, Serialize, Eq, PartialEq)]
-#[serde(tag = "label", rename_all = "snake_case")]
 #[serde(rename(deserialize = "BanVideoStreamingCompleted"))]
 pub struct BanVideoStreamingCompletedV1 {
     pub ban: bool,
@@ -123,5 +107,43 @@ pub struct BanCollaborationCompletedV1 {
 impl From<BanCollaborationCompletedV1> for Event {
     fn from(value: BanCollaborationCompletedV1) -> Self {
         Event::V1(EventV1::BanCollaborationCompleted(value))
+    }
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, Eq, PartialEq)]
+#[serde(tag = "label", rename_all = "snake_case")]
+#[serde(rename(deserialize = "BanCompleted"))]
+pub struct BanCompletedV1 {
+    pub ban: bool,
+    pub classroom_id: Uuid,
+    pub user_account: AccountId,
+    pub op_id: Uuid,
+}
+
+impl From<BanCompletedV1> for Event {
+    fn from(value: BanCompletedV1) -> Self {
+        Event::V1(EventV1::BanCompleted(value))
+    }
+}
+
+impl From<BanVideoStreamingCompletedV1> for BanCompletedV1 {
+    fn from(b: BanVideoStreamingCompletedV1) -> Self {
+        Self {
+            ban: b.ban,
+            classroom_id: b.classroom_id,
+            user_account: b.user_account,
+            op_id: b.op_id,
+        }
+    }
+}
+
+impl From<BanCollaborationCompletedV1> for BanCompletedV1 {
+    fn from(b: BanCollaborationCompletedV1) -> Self {
+        Self {
+            ban: b.ban,
+            classroom_id: b.classroom_id,
+            user_account: b.user_account,
+            op_id: b.op_id,
+        }
     }
 }
