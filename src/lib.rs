@@ -1,10 +1,10 @@
 use serde::{Deserialize, Serialize};
 
-pub use crate::v1::{video_group::VideoGroupEventV1, EventV1};
+pub use crate::v1::{agent::AgentEventV1, video_group::VideoGroupEventV1, EventV1};
 
 mod v1;
 
-#[derive(Clone, Copy, Debug, Deserialize, Serialize, Eq, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Serialize, Eq, PartialEq)]
 #[serde(tag = "version", rename_all = "snake_case")]
 pub enum Event {
     V1(EventV1),
