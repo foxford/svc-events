@@ -1,6 +1,6 @@
 [package]
 name = "svc-events"
-version = "0.3.0"
+version = "0.4.0"
 edition = "2021"
 license = "MIT"
 repository = "https://github.com/foxford/svc-events"
@@ -9,4 +9,5 @@ description = "Foxford events"
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
+svc-agent = "0.20"
 thiserror = "1.0"
