@@ -81,6 +81,18 @@ pub struct BanCollaborationCompletedV1 {
     pub parent: EventId,
 }
 
+impl BanCollaborationCompletedV1 {
+    pub fn new_from_accepted(e: BanAcceptedV1, id: EventId) -> Self {
+        Self {
+            ban: e.ban,
+            classroom_id: e.classroom_id,
+            user_account: e.user_account,
+            op_id: e.op_id,
+            parent: id,
+        }
+    }
+}
+
 impl From<BanCollaborationCompletedV1> for Event {
     fn from(value: BanCollaborationCompletedV1) -> Self {
         Event::V1(EventV1::BanCollaborationCompleted(value))
