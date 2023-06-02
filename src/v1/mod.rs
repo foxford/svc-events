@@ -2,6 +2,7 @@ use crate::Event;
 use serde::{Deserialize, Serialize};
 
 pub mod ban;
+pub mod agent;
 pub mod video_group;
 
 #[derive(Clone, Debug, Deserialize, Serialize, Eq, PartialEq)]
@@ -15,6 +16,7 @@ pub enum EventV1 {
     BanVideoStreamingCompleted(ban::BanVideoStreamingCompletedV1),
     BanCollaborationCompleted(ban::BanCollaborationCompletedV1),
     BanCompleted(ban::BanCompletedV1),
+    Agent(agent::AgentEventV1),
 }
 
 impl From<EventV1> for Event {
