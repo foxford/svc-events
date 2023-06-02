@@ -12,7 +12,7 @@ pub struct BanIntentV1 {
     pub classroom_id: Uuid,
     pub sender: AccountId,
     pub user_account: AccountId,
-    pub last_op_id: i64,
+    pub last_operation_id: i64,
 }
 
 impl From<BanIntentV1> for Event {
@@ -28,7 +28,7 @@ pub struct BanAcceptedV1 {
     pub ban: bool,
     pub classroom_id: Uuid,
     pub user_account: AccountId,
-    pub op_id: i64,
+    pub operation_id: i64,
 }
 
 impl From<BanAcceptedV1> for Event {
@@ -44,7 +44,7 @@ pub struct BanRejectedV1 {
     pub ban: bool,
     pub classroom_id: Uuid,
     pub user_account: AccountId,
-    pub op_id: i64,
+    pub operation_id: i64,
 }
 
 impl From<BanRejectedV1> for Event {
@@ -60,7 +60,7 @@ pub struct BanVideoStreamingCompletedV1 {
     pub ban: bool,
     pub classroom_id: Uuid,
     pub user_account: AccountId,
-    pub op_id: i64,
+    pub operation_id: i64,
     pub parent: EventId,
 }
 
@@ -77,7 +77,7 @@ pub struct BanCollaborationCompletedV1 {
     pub ban: bool,
     pub classroom_id: Uuid,
     pub user_account: AccountId,
-    pub op_id: i64,
+    pub operation_id: i64,
     pub parent: EventId,
 }
 
@@ -87,7 +87,7 @@ impl BanCollaborationCompletedV1 {
             ban: e.ban,
             classroom_id: e.classroom_id,
             user_account: e.user_account,
-            op_id: e.op_id,
+            operation_id: e.operation_id,
             parent: id,
         }
     }
@@ -106,7 +106,7 @@ pub struct BanCompletedV1 {
     pub ban: bool,
     pub classroom_id: Uuid,
     pub user_account: AccountId,
-    pub op_id: i64,
+    pub operation_id: i64,
 }
 
 impl From<BanCompletedV1> for Event {
@@ -121,7 +121,7 @@ impl From<BanVideoStreamingCompletedV1> for BanCompletedV1 {
             ban: b.ban,
             classroom_id: b.classroom_id,
             user_account: b.user_account,
-            op_id: b.op_id,
+            operation_id: b.operation_id,
         }
     }
 }
@@ -132,7 +132,7 @@ impl From<BanCollaborationCompletedV1> for BanCompletedV1 {
             ban: b.ban,
             classroom_id: b.classroom_id,
             user_account: b.user_account,
-            op_id: b.op_id,
+            operation_id: b.operation_id,
         }
     }
 }
