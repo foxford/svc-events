@@ -1,8 +1,8 @@
 use crate::Event;
 use serde::{Deserialize, Serialize};
 
-pub mod ban;
 pub mod agent;
+pub mod ban;
 pub mod video_group;
 
 #[derive(Clone, Debug, Deserialize, Serialize, Eq, PartialEq)]
