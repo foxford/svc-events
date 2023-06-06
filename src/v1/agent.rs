@@ -7,7 +7,7 @@ use svc_agent::AgentId;
 #[serde(rename(deserialize = "AgentEvent"))]
 pub enum AgentEventV1 {
     Entered { agent_id: AgentId },
-    Leaved { agent_id: AgentId },
+    Left { agent_id: AgentId },
 }
 
 impl From<AgentEventV1> for EventV1 {
@@ -46,7 +46,7 @@ mod tests {
             let json = json!(
                 {
                     "entity_type": "agent",
-                    "label": "leaved",
+                    "label": "left",
                     "agent_id": agent_id,
                 }
             );
@@ -54,7 +54,7 @@ mod tests {
             let event1 = serde_json::from_str::<EventV1>(&json).unwrap();
 
             let agent_id = AgentId::from_str(agent_id).expect("parse agent_id");
-            let agent = AgentEventV1::Leaved { agent_id };
+            let agent = AgentEventV1::Left { agent_id };
             let event2 = EventV1::Agent(agent);
 
             assert_eq!(event1, event2);
