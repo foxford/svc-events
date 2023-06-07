@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use svc_agent::AgentId;
 use svc_authn::AccountId;
 use uuid::Uuid;
 
@@ -10,7 +11,7 @@ use crate::{Event, EventId, EventV1};
 pub struct BanIntentV1 {
     pub ban: bool,
     pub classroom_id: Uuid,
-    pub sender: AccountId,
+    pub sender: AgentId,
     pub target_account: AccountId,
     pub last_operation_id: i64,
 }
