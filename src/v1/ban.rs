@@ -65,6 +65,18 @@ pub struct BanVideoStreamingCompletedV1 {
     pub parent: EventId,
 }
 
+impl BanVideoStreamingCompletedV1 {
+    pub fn new_from_accepted(e: BanAcceptedV1, id: EventId) -> Self {
+        Self {
+            ban: e.ban,
+            classroom_id: e.classroom_id,
+            target_account: e.target_account,
+            operation_id: e.operation_id,
+            parent: id,
+        }
+    }
+}
+
 impl From<BanVideoStreamingCompletedV1> for Event {
     fn from(value: BanVideoStreamingCompletedV1) -> Self {
         Event::V1(EventV1::BanVideoStreamingCompleted(value))
