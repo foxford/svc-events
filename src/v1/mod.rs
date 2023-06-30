@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 pub mod agent;
 pub mod ban;
 pub mod edition;
+pub mod event;
 pub mod room;
 pub mod video_group;
 
@@ -21,6 +22,7 @@ pub enum EventV1 {
     Agent(agent::AgentEventV1),
     Edition(edition::EditionEventV1),
     Room(room::RoomEventV1),
+    Event(event::EventEventV1),
 }
 
 impl From<EventV1> for Event {
