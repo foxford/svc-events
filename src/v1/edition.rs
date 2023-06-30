@@ -1,4 +1,4 @@
-use crate::{serde_ext::segments::Segments, EventV1};
+use crate::{serde::segments::Segments, EventV1};
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
@@ -32,7 +32,7 @@ pub enum EditionCommitResult {
     Success {
         source_room_id: Uuid,
         committed_room_id: Uuid,
-        #[serde(with = "crate::serde_ext::segments")]
+        #[serde(with = "crate::serde::segments")]
         modified_segments: Segments,
     },
     Error {
