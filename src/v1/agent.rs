@@ -1,13 +1,33 @@
 use crate::EventV1;
 use serde::{Deserialize, Serialize};
-use svc_agent::AgentId;
+use svc_agent::{AccountId, AgentId};
+use uuid::Uuid;
 
 #[derive(Debug, Clone, Deserialize, Serialize, Eq, PartialEq)]
 #[serde(tag = "label", rename_all = "snake_case")]
 #[serde(rename(deserialize = "AgentEvent"))]
 pub enum AgentEventV1 {
-    Entered { agent_id: AgentId },
-    Left { agent_id: AgentId },
+    Entered {
+        agent_id: AgentId,
+    },
+    Left {
+        agent_id: AgentId,
+    },
+    Banned {
+        room_id: Uuid,
+        account_id: AccountId,
+        banned_by: AccountId,
+        banned: bool,
+        #[serde(skip_serializing_if = "Option::is_none")]
+        reason: Option<String>,
+        classroom_id: Uuid,
+    },
+    Updated {
+        account_id: AccountId,
+        banned: bool,
+        #[serde(skip_serializing_if = "Option::is_none")]
+        reason: Option<String>,
+    },
 }
 
 impl From<AgentEventV1> for EventV1 {
