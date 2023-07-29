@@ -19,7 +19,8 @@ pub enum EventV1 {
     BanCompleted(ban::BanCompletedV1),
     Agent(agent::AgentEventV1),
     UpdateJanusConfigStage(stage::UpdateJanusConfigStageV1),
-    SendNotificationStage(stage::SendNotificationStageV1),
+    SendNatsNotificationStage(stage::SendNatsNotificationStageV1),
+    SendMqttNotificationStage(stage::SendMqttNotificationStageV1),
 }
 
 impl From<EventV1> for Event {
