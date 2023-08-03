@@ -75,6 +75,16 @@ pub enum VideoGroupIntentEventV1 {
     },
 }
 
+impl VideoGroupIntentEventV1 {
+    pub fn backend_id(&self) -> AgentId {
+        match self {
+            VideoGroupIntentEventV1::CreateIntent { backend_id, .. } => backend_id.clone(),
+            VideoGroupIntentEventV1::UpdateIntent { backend_id, .. } => backend_id.clone(),
+            VideoGroupIntentEventV1::DeleteIntent { backend_id, .. } => backend_id.clone(),
+        }
+    }
+}
+
 impl From<VideoGroupIntentEventV1> for EventV1 {
     fn from(event: VideoGroupIntentEventV1) -> Self {
         EventV1::VideoGroupIntent(event)
@@ -84,32 +94,6 @@ impl From<VideoGroupIntentEventV1> for EventV1 {
 impl From<VideoGroupIntentEventV1> for Event {
     fn from(value: VideoGroupIntentEventV1) -> Self {
         Event::V1(EventV1::VideoGroupIntent(value))
-    }
-}
-
-impl VideoGroupIntentEventV1 {
-    pub fn created_at(&self) -> i64 {
-        match *self {
-            VideoGroupIntentEventV1::CreateIntent { created_at, .. } => created_at,
-            VideoGroupIntentEventV1::UpdateIntent { created_at, .. } => created_at,
-            VideoGroupIntentEventV1::DeleteIntent { created_at, .. } => created_at,
-        }
-    }
-
-    pub fn backend_id(&self) -> AgentId {
-        match self {
-            VideoGroupIntentEventV1::CreateIntent { backend_id, .. } => backend_id.clone(),
-            VideoGroupIntentEventV1::UpdateIntent { backend_id, .. } => backend_id.clone(),
-            VideoGroupIntentEventV1::DeleteIntent { backend_id, .. } => backend_id.clone(),
-        }
-    }
-
-    pub fn as_label(&self) -> &str {
-        match self {
-            VideoGroupIntentEventV1::CreateIntent { .. } => "create_intent",
-            VideoGroupIntentEventV1::UpdateIntent { .. } => "update_intent",
-            VideoGroupIntentEventV1::DeleteIntent { .. } => "delete_intent",
-        }
     }
 }
 
