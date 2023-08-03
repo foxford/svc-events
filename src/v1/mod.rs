@@ -10,6 +10,7 @@ pub mod video_group;
 #[serde(rename(deserialize = "Event"))]
 pub enum EventV1 {
     VideoGroup(video_group::VideoGroupEventV1),
+    VideoGroupIntent(video_group::VideoGroupIntentEventV1),
     BanIntent(ban::BanIntentV1),
     BanAccepted(ban::BanAcceptedV1),
     BanRejected(ban::BanRejectedV1),
