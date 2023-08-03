@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 pub use crate::event_id::EventId;
-pub use crate::v1::{agent::AgentEventV1, ban, stage, video_group::VideoGroupEventV1, EventV1};
+pub use crate::v1::{agent::AgentEventV1, ban, video_group::VideoGroupEventV1, EventV1};
 
 mod event_id;
 mod v1;
@@ -19,11 +19,14 @@ mod tests {
     mod video_group {
         use super::*;
         use serde_json::json;
+        use svc_agent::AgentId;
+        use svc_authn::AccountId;
 
         #[test]
         fn serialize_test() {
             let video_group_v1 = VideoGroupEventV1::Created {
                 created_at: 1673955105514,
+                backend_id: AgentId::new("l1", AccountId::new("l2", "a")),
             };
             let event_v1 = EventV1::VideoGroup(video_group_v1);
             let event = Event::V1(event_v1);
@@ -32,7 +35,7 @@ mod tests {
 
             assert_eq!(
                 json,
-                "{\"version\":\"v1\",\"entity_type\":\"video_group\",\"label\":\"created\",\"created_at\":1673955105514}"
+                "{\"version\":\"v1\",\"entity_type\":\"video_group\",\"label\":\"created\",\"created_at\":1673955105514,\"backend_id\":\"l1.l2.a\"}"
             )
         }
 
@@ -44,6 +47,7 @@ mod tests {
                     "entity_type": "video_group",
                     "label": "updated",
                     "created_at": 1673955105514 as i64,
+                    "backend_id": "l1.l2.a",
                 }
             );
             let json = serde_json::to_string(&json).expect("serialization to string");
@@ -51,6 +55,7 @@ mod tests {
 
             let video_group_v1 = VideoGroupEventV1::Updated {
                 created_at: 1673955105514,
+                backend_id: AgentId::new("l1", AccountId::new("l2", "a")),
             };
             let event_v1 = EventV1::VideoGroup(video_group_v1);
             let event2 = Event::V1(event_v1);

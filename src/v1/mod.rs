@@ -3,7 +3,6 @@ use serde::{Deserialize, Serialize};
 
 pub mod agent;
 pub mod ban;
-pub mod stage;
 pub mod video_group;
 
 #[derive(Clone, Debug, Deserialize, Serialize, Eq, PartialEq)]
@@ -18,7 +17,6 @@ pub enum EventV1 {
     BanCollaborationCompleted(ban::BanCollaborationCompletedV1),
     BanCompleted(ban::BanCompletedV1),
     Agent(agent::AgentEventV1),
-    UpdateJanusConfigAndSendNotificationStage(stage::UpdateJanusConfigAndSendNotificationStageV1),
 }
 
 impl From<EventV1> for Event {
