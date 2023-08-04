@@ -4,7 +4,10 @@ pub use crate::event_id::EventId;
 pub use crate::v1::{
     agent::AgentEventV1,
     ban,
-    video_group::{VideoGroupEventV1, VideoGroupIntentEventV1},
+    video_group::VideoGroupEventV1,
+    video_group_intent::{
+        VideoGroupCreateIntentEventV1, VideoGroupDeleteIntentEventV1, VideoGroupUpdateIntentEventV1,
+    },
     EventV1,
 };
 

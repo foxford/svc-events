@@ -1,6 +1,5 @@
 use crate::{v1::EventV1, Event};
 use serde::{Deserialize, Serialize};
-use svc_agent::AgentId;
 
 #[derive(Debug, Clone, Deserialize, Serialize, Eq, PartialEq)]
 #[serde(tag = "label", rename_all = "snake_case")]
@@ -23,22 +22,6 @@ impl From<VideoGroupEventV1> for Event {
     }
 }
 
-impl From<VideoGroupIntentEventV1> for VideoGroupEventV1 {
-    fn from(value: VideoGroupIntentEventV1) -> Self {
-        match value {
-            VideoGroupIntentEventV1::CreateIntent { created_at, .. } => {
-                VideoGroupEventV1::Created { created_at }
-            }
-            VideoGroupIntentEventV1::UpdateIntent { created_at, .. } => {
-                VideoGroupEventV1::Updated { created_at }
-            }
-            VideoGroupIntentEventV1::DeleteIntent { created_at, .. } => {
-                VideoGroupEventV1::Deleted { created_at }
-            }
-        }
-    }
-}
-
 impl VideoGroupEventV1 {
     pub fn created_at(&self) -> i64 {
         match *self {
@@ -54,46 +37,6 @@ impl VideoGroupEventV1 {
             VideoGroupEventV1::Updated { .. } => "updated",
             VideoGroupEventV1::Deleted { .. } => "deleted",
         }
-    }
-}
-
-#[derive(Debug, Clone, Deserialize, Serialize, Eq, PartialEq)]
-#[serde(tag = "label", rename_all = "snake_case")]
-#[serde(rename(deserialize = "VideoGroupIntentEvent"))]
-pub enum VideoGroupIntentEventV1 {
-    CreateIntent {
-        backend_id: AgentId,
-        created_at: i64,
-    },
-    UpdateIntent {
-        backend_id: AgentId,
-        created_at: i64,
-    },
-    DeleteIntent {
-        backend_id: AgentId,
-        created_at: i64,
-    },
-}
-
-impl VideoGroupIntentEventV1 {
-    pub fn backend_id(&self) -> AgentId {
-        match self {
-            VideoGroupIntentEventV1::CreateIntent { backend_id, .. } => backend_id.clone(),
-            VideoGroupIntentEventV1::UpdateIntent { backend_id, .. } => backend_id.clone(),
-            VideoGroupIntentEventV1::DeleteIntent { backend_id, .. } => backend_id.clone(),
-        }
-    }
-}
-
-impl From<VideoGroupIntentEventV1> for EventV1 {
-    fn from(event: VideoGroupIntentEventV1) -> Self {
-        EventV1::VideoGroupIntent(event)
-    }
-}
-
-impl From<VideoGroupIntentEventV1> for Event {
-    fn from(value: VideoGroupIntentEventV1) -> Self {
-        Event::V1(EventV1::VideoGroupIntent(value))
     }
 }
 
