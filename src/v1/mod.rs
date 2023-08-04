@@ -4,12 +4,16 @@ use serde::{Deserialize, Serialize};
 pub mod agent;
 pub mod ban;
 pub mod video_group;
+pub mod video_group_intent;
 
 #[derive(Clone, Debug, Deserialize, Serialize, Eq, PartialEq)]
 #[serde(tag = "entity_type", rename_all = "snake_case")]
 #[serde(rename(deserialize = "Event"))]
 pub enum EventV1 {
     VideoGroup(video_group::VideoGroupEventV1),
+    VideoGroupCreateIntent(video_group_intent::VideoGroupCreateIntentEventV1),
+    VideoGroupUpdateIntent(video_group_intent::VideoGroupUpdateIntentEventV1),
+    VideoGroupDeleteIntent(video_group_intent::VideoGroupDeleteIntentEventV1),
     BanIntent(ban::BanIntentV1),
     BanAccepted(ban::BanAcceptedV1),
     BanRejected(ban::BanRejectedV1),
