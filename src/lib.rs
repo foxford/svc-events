@@ -32,7 +32,7 @@ mod tests {
 
             assert_eq!(
                 json,
-                "{\"version\":\"v1\",\"entity_type\":\"video_group\",\"label\":\"created\",\"created_at\":1673955105514}"
+                "{\"version\":\"v1\",\"type\":\"video_group\",\"label\":\"created\",\"created_at\":1673955105514}"
             )
         }
 
@@ -41,7 +41,7 @@ mod tests {
             let json = json!(
                 {
                     "version": "v1",
-                    "entity_type": "video_group",
+                    "type": "video_group",
                     "label": "updated",
                     "created_at": 1673955105514 as i64,
                 }

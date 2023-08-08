@@ -59,7 +59,7 @@ mod tests {
 
             assert_eq!(
                 json,
-                "{\"entity_type\":\"video_group\",\"label\":\"created\",\"created_at\":1673955105514}"
+                "{\"type\":\"video_group\",\"label\":\"created\",\"created_at\":1673955105514}"
             )
         }
 
@@ -67,7 +67,7 @@ mod tests {
         fn deserialize_test() {
             let json = json!(
                 {
-                    "entity_type": "video_group",
+                    "type": "video_group",
                     "label": "updated",
                     "created_at": 1673955105514 as i64,
                 }
