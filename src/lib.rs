@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 pub use crate::event_id::EventId;
-pub use crate::v1::{agent::AgentEventV1, ban, video_group::VideoGroupEventV1, EventV1};
+pub use crate::v1::{agent, ban, video_group::VideoGroupEventV1, EventV1};
 
 mod event_id;
 mod v1;
@@ -32,7 +32,7 @@ mod tests {
 
             assert_eq!(
                 json,
-                "{\"version\":\"v1\",\"entity_type\":\"video_group\",\"label\":\"created\",\"created_at\":1673955105514}"
+                "{\"version\":\"v1\",\"type\":\"video_group\",\"label\":\"created\",\"created_at\":1673955105514}"
             )
         }
 
@@ -41,7 +41,7 @@ mod tests {
             let json = json!(
                 {
                     "version": "v1",
-                    "entity_type": "video_group",
+                    "type": "video_group",
                     "label": "updated",
                     "created_at": 1673955105514 as i64,
                 }
